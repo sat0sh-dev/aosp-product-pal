@@ -1,0 +1,29 @@
+// PAL (Protocol Adaptation Layer) Daemon
+// Phase 1: UDP Multicast Receiver
+//
+// 制約:
+// - AOSP固有ライブラリに依存しない（POSIX標準のみ）
+// - ログはsyslogを使用
+// - OSSとの互換性を重視
+
+cc_binary {
+    name: "pal_daemon",
+    vendor: true,
+
+    srcs: [
+        "pal_daemon.cpp",
+    ],
+
+    // POSIX標準ライブラリのみ使用（AOSP固有の依存なし）
+    shared_libs: [
+        // 将来的にgRPCクライアントを追加予定
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+
+    init_rc: ["pal_daemon.rc"],
+}

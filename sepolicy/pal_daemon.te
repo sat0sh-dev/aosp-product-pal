@@ -1,0 +1,37 @@
+# PAL Daemon SELinux Policy
+#
+# This policy allows pal_daemon to:
+# - Create and use UDP sockets for multicast reception
+# - Join multicast groups (IP_ADD_MEMBERSHIP)
+# - Connect to Data Broker via UDS (Phase 3.7: trust-based)
+# - Write to syslog for logging
+
+# Type declarations
+type pal_daemon, domain;
+type pal_daemon_exec, exec_type, vendor_file_type, file_type;
+
+# Domain transition from init
+allow init pal_daemon_exec:file { read open execute getattr };
+allow init pal_daemon:process { transition rlimitinh siginh };
+allow pal_daemon pal_daemon_exec:file { read open execute getattr entrypoint };
+type_transition init pal_daemon_exec:process pal_daemon;
+
+# Allow pal_daemon to use vendor files
+allow pal_daemon vendor_file:dir { search read open getattr };
+allow pal_daemon vendor_file:file { read open getattr execute };
+
+# Network access for UDP multicast
+allow pal_daemon self:udp_socket { create bind read write ioctl setopt getopt };
+allow pal_daemon self:capability { net_raw net_admin };
+allow pal_daemon node:udp_socket node_bind;
+allow pal_daemon port:udp_socket name_bind;
+
+# Phase 3.7: UDS socket client for Data Broker connection (trust-based)
+allow pal_daemon self:unix_stream_socket { create connect read write getopt setopt shutdown };
+allow pal_daemon db_data_file:dir search;
+allow pal_daemon db_data_file:sock_file write;
+allow pal_daemon db_daemon:unix_stream_socket connectto;
+
+# Allow syslog/logd access for logging
+allow pal_daemon logd:unix_dgram_socket sendto;
+allow pal_daemon logdr_socket:sock_file write;

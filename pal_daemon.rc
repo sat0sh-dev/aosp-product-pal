@@ -1,0 +1,6 @@
+service pal_daemon /vendor/bin/pal_daemon
+    class main
+    user system
+    group system inet
+    capabilities NET_RAW
+    seclabel u:r:pal_daemon:s0
