@@ -1,4 +1,5 @@
-service pal_daemon /vendor/bin/pal_daemon
+# PAL Daemon - Product partition
+service pal_daemon /product/bin/pal_daemon
     class main
     user system
     group system inet

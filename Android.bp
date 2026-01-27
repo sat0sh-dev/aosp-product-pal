@@ -8,7 +8,7 @@
 
 cc_binary {
     name: "pal_daemon",
-    vendor: true,
+    product_specific: true,
 
     srcs: [
         "pal_daemon.cpp",

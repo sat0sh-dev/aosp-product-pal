@@ -1,6 +1,6 @@
 # PAL Daemon File Contexts
 #
-# This file defines SELinux labels for pal_daemon files
+# Product partition module
 
 # Binary executable
-/vendor/bin/pal_daemon    u:object_r:pal_daemon_exec:s0
+/product/bin/pal_daemon    u:object_r:pal_daemon_exec:s0

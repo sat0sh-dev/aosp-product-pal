@@ -6,5 +6,5 @@ PRODUCT_PACKAGES += \
     pal_daemon
 
 # SELinux policy
-BOARD_VENDOR_SEPOLICY_DIRS += \
+PRODUCT_PRIVATE_SEPOLICY_DIRS += \
     vendor/pal/sepolicy

@@ -15,7 +15,7 @@ constexpr int MULTICAST_PORT = 12345;
 constexpr int BUFFER_SIZE = 1024;
 
 // Phase 3.7: Data Broker UDS設定（trust-based authentication）
-constexpr const char* DB_SOCKET_PATH = "/data/vendor/db/data_broker.sock";
+constexpr const char* DB_SOCKET_PATH = "/data/misc/db/data_broker.sock";
 
 /**
  * Data BrokerへUDS接続してSETコマンドを送信

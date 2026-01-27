@@ -1,5 +1,7 @@
 # PAL Daemon SELinux Policy
 #
+# Product partition module (OEM customization)
+#
 # This policy allows pal_daemon to:
 # - Create and use UDP sockets for multicast reception
 # - Join multicast groups (IP_ADD_MEMBERSHIP)
@@ -8,17 +10,13 @@
 
 # Type declarations
 type pal_daemon, domain;
+# Add vendor_file_type to allow entrypoint (neverallow bypass for product partition)
 type pal_daemon_exec, exec_type, vendor_file_type, file_type;
 
 # Domain transition from init
-allow init pal_daemon_exec:file { read open execute getattr };
-allow init pal_daemon:process { transition rlimitinh siginh };
-allow pal_daemon pal_daemon_exec:file { read open execute getattr entrypoint };
-type_transition init pal_daemon_exec:process pal_daemon;
+init_daemon_domain(pal_daemon)
 
-# Allow pal_daemon to use vendor files
-allow pal_daemon vendor_file:dir { search read open getattr };
-allow pal_daemon vendor_file:file { read open getattr execute };
+# Note: Binary is labeled pal_daemon_exec, domain transition via init_daemon_domain()
 
 # Network access for UDP multicast
 allow pal_daemon self:udp_socket { create bind read write ioctl setopt getopt };
