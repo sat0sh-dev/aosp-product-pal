@@ -33,3 +33,7 @@ allow pal_daemon db_daemon:unix_stream_socket connectto;
 # Allow syslog/logd access for logging
 allow pal_daemon logd:unix_dgram_socket sendto;
 allow pal_daemon logdr_socket:sock_file write;
+
+# Phase 3.13: KeystoreCrypto service connection (abstract namespace socket)
+# KeystoreCrypto is a platform_app that provides Keystore operations via UDS
+allow pal_daemon platform_app:unix_stream_socket connectto;

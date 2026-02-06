@@ -4,3 +4,6 @@
 
 # Binary executable
 /product/bin/pal_daemon    u:object_r:pal_daemon_exec:s0
+
+# Phase 3.13: Test binary (uses same domain)
+/product/bin/pal_vcs_mac_test    u:object_r:pal_daemon_exec:s0

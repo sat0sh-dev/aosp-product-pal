@@ -1,11 +1,11 @@
 // PAL (Protocol Adaptation Layer) Daemon
 // Phase 1: UDP Multicast Receiver
+// Phase 3.13: PAL→VCS MAC共通鍵管理
 //
-// 制約:
-// - AOSP固有ライブラリに依存しない（POSIX標準のみ）
-// - ログはsyslogを使用
-// - OSSとの互換性を重視
+// pal_daemon: POSIX準拠（従来通り）
+// libpal_vcs_mac: Phase 3.13用ライブラリ（KeystoreCrypto + VCS通信）
 
+// 従来のPAL daemon（POSIX準拠）
 cc_binary {
     name: "pal_daemon",
     product_specific: true,
@@ -16,7 +16,6 @@ cc_binary {
 
     // POSIX標準ライブラリのみ使用（AOSP固有の依存なし）
     shared_libs: [
-        // 将来的にgRPCクライアントを追加予定
     ],
 
     cflags: [
@@ -26,4 +25,47 @@ cc_binary {
     ],
 
     init_rc: ["pal_daemon.rc"],
+}
+
+// Phase 3.13: PAL-VCS MAC ライブラリ
+// KeystoreCrypto サービス連携 + VCS UDP通信
+cc_library_static {
+    name: "libpal_vcs_mac",
+    product_specific: true,
+
+    srcs: [
+        "keystore_crypto_client.cpp",
+        "vcs_client.cpp",
+    ],
+
+    local_include_dirs: ["."],
+
+    export_include_dirs: ["."],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+}
+
+// Phase 3.13: PAL-VCS MAC テスト用バイナリ
+// KeystoreCrypto + VCS通信のE2Eテスト
+cc_binary {
+    name: "pal_vcs_mac_test",
+    product_specific: true,
+
+    srcs: [
+        "pal_vcs_mac_test.cpp",
+    ],
+
+    static_libs: [
+        "libpal_vcs_mac",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
 }
