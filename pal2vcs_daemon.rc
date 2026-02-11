@@ -1,0 +1,13 @@
+# PAL2VCS Daemon (Phase 4.2)
+# SET direction: Data Broker -> PAL2VCS -> VCS (via SOME/IP)
+
+service pal2vcs_daemon /product/bin/pal2vcs_daemon
+    class main
+    user system
+    group system inet
+    disabled
+
+# Auto-start after boot (disabled by default for manual testing)
+# Uncomment to enable auto-start:
+# on property:sys.boot_completed=1
+#     start pal2vcs_daemon

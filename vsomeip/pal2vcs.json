@@ -1,0 +1,30 @@
+{
+    "unicast": "127.0.0.1",
+    "netmask": "255.255.255.0",
+    "logging": {
+        "level": "info",
+        "console": "true",
+        "file": {
+            "enable": "false"
+        },
+        "dlt": {
+            "enable": "false"
+        }
+    },
+    "applications": [
+        {
+            "name": "pal2vcs_daemon",
+            "id": "0x0200"
+        }
+    ],
+    "clients": [
+        {
+            "service": "0x1234",
+            "instance": "0x5678",
+            "unreliable": [30509]
+        }
+    ],
+    "service-discovery": {
+        "enable": "false"
+    }
+}

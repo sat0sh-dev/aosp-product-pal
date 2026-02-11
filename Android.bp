@@ -69,3 +69,54 @@ cc_binary {
         "-Wextra",
     ],
 }
+
+// Phase 4.2: PAL2VCS Daemon
+// SET direction: Data Broker -> PAL2VCS -> VCS (via SOME/IP)
+cc_binary {
+    name: "pal2vcs_daemon",
+    product_specific: true,
+
+    srcs: [
+        "pal2vcs_daemon.cpp",
+    ],
+
+    shared_libs: [
+        "libvsomeip3",
+        "libvsomeip3-cfg",
+        "liblog",
+    ],
+
+    static_libs: [
+        "libboost_system",
+        "libboost_thread",
+        "libboost_filesystem",
+    ],
+
+    header_libs: [
+        "libboost_headers",
+    ],
+
+    cppflags: [
+        "-std=c++17",
+        "-fexceptions",
+        "-DVSOMEIP_BASE_PATH=\"/data/local/tmp/\"",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+    ],
+
+    rtti: true,
+
+    init_rc: ["pal2vcs_daemon.rc"],
+}
+
+// PAL2VCS vsomeip configuration (Phase 4.2)
+prebuilt_etc {
+    name: "pal2vcs_vsomeip_config",
+    src: "vsomeip/pal2vcs.json",
+    sub_dir: "vsomeip",
+    filename: "pal2vcs.json",
+    product_specific: true,
+}
