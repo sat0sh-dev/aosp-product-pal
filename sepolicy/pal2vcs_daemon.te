@@ -1,0 +1,42 @@
+# PAL2VCS Daemon SELinux Policy (Phase 4.2)
+#
+# Product partition module
+#
+# This policy allows pal2vcs_daemon to:
+# - Connect to Data Broker via UDS (receive SET commands)
+# - Use SOME/IP (vsomeip) for VCS communication
+# - Write to syslog for logging
+#
+# NOTE: POC uses permissive mode due to vsomeip socket creation neverallow.
+# Production deployment requires platform-level SELinux policy changes.
+
+# Type declarations
+type pal2vcs_daemon, domain, coredomain, mlstrustedsubject;
+type pal2vcs_daemon_exec, exec_type, file_type, system_file_type;
+
+# POC: Permissive mode for vsomeip socket operations
+# TODO: Production requires neverallow exception in system/sepolicy
+permissive pal2vcs_daemon;
+
+# Domain transition from init
+init_daemon_domain(pal2vcs_daemon)
+
+# UDS socket client for Data Broker connection
+allow pal2vcs_daemon self:unix_stream_socket { create connect read write getopt setopt shutdown };
+allow pal2vcs_daemon db_data_file:dir search;
+allow pal2vcs_daemon db_data_file:sock_file write;
+allow pal2vcs_daemon db_daemon:unix_stream_socket connectto;
+
+# Network access for SOME/IP (vsomeip uses TCP and UDP)
+allow pal2vcs_daemon self:tcp_socket { create bind connect listen accept read write ioctl setopt getopt shutdown };
+allow pal2vcs_daemon self:udp_socket { create bind read write ioctl setopt getopt };
+allow pal2vcs_daemon self:capability { net_raw net_admin };
+allow pal2vcs_daemon node:tcp_socket node_bind;
+allow pal2vcs_daemon node:udp_socket node_bind;
+allow pal2vcs_daemon port:tcp_socket name_bind;
+allow pal2vcs_daemon port:udp_socket name_bind;
+allow pal2vcs_daemon port:tcp_socket name_connect;
+
+# Allow syslog/logd access for logging
+allow pal2vcs_daemon logd:unix_dgram_socket sendto;
+allow pal2vcs_daemon logdr_socket:sock_file write;

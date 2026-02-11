@@ -7,3 +7,9 @@
 
 # Phase 3.13: Test binary (uses same domain)
 /product/bin/pal_vcs_mac_test    u:object_r:pal_daemon_exec:s0
+
+# Phase 4.2: PAL2VCS Daemon (SOME/IP)
+/product/bin/pal2vcs_daemon    u:object_r:pal2vcs_daemon_exec:s0
+
+# Phase 4.2: vsomeip socket directory
+# POC: Using permissive mode, socket directory inherits default label

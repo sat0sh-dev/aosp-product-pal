@@ -7,10 +7,9 @@ service pal2vcs_daemon /product/bin/pal2vcs_daemon
     group system inet
     setenv VSOMEIP_CONFIGURATION /product/etc/vsomeip/pal2vcs.json
 
-# Create vsomeip runtime directory on boot
+# Create vsomeip socket directory on boot
 on post-fs-data
-    mkdir /product/run/someip 0755 system system
-    mkdir /data/local/tmp 0777 root root
+    mkdir /dev/socket/vsomeip 0755 system system
 
 # Auto-start after boot
 on property:sys.boot_completed=1

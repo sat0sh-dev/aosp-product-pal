@@ -35,7 +35,7 @@ constexpr vsomeip::instance_t VCS_INSTANCE_ID = 0x5678;
 constexpr vsomeip::method_t VCS_METHOD_ID = 0x0421;
 
 // UDS configuration
-constexpr const char* PAL2VCS_SOCKET_PATH = "/data/local/tmp/pal2vcs.sock";
+constexpr const char* PAL2VCS_SOCKET_PATH = "/dev/socket/vsomeip/pal2vcs.sock";
 constexpr int BUFFER_SIZE = 1024;
 constexpr int RESPONSE_TIMEOUT_MS = 5000;
 

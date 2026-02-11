@@ -99,7 +99,7 @@ cc_binary {
     cppflags: [
         "-std=c++17",
         "-fexceptions",
-        "-DVSOMEIP_BASE_PATH=\"/data/local/tmp/\"",
+        "-DVSOMEIP_BASE_PATH=\"/dev/socket/vsomeip/\"",
     ],
 
     cflags: [
