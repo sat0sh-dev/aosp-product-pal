@@ -12,5 +12,5 @@
 /product/bin/pal2vcs_daemon    u:object_r:pal2vcs_daemon_exec:s0
 
 # Phase 4.2.1: vsomeip socket directory
-# core_data_file_type attribute exempts from coredomain neverallow
-/dev/socket/vsomeip(/.*)?    u:object_r:vsomeip_data_file:s0
+# Use /data/misc/ for product policy compatibility (like db_daemon)
+/data/misc/vsomeip(/.*)?    u:object_r:vsomeip_data_file:s0

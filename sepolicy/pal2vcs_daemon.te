@@ -42,7 +42,7 @@ allow pal2vcs_daemon logd:unix_dgram_socket sendto;
 allow pal2vcs_daemon logdr_socket:sock_file write;
 
 # Phase 4.2.1: vsomeip internal socket operations
-# vsomeip library creates UDS sockets at VSOMEIP_BASE_PATH for routing manager IPC
+# vsomeip creates UDS sockets at /data/misc/vsomeip/ (VSOMEIP_BASE_PATH)
 allow pal2vcs_daemon vsomeip_data_file:dir { create_dir_perms rw_dir_perms };
 allow pal2vcs_daemon vsomeip_data_file:sock_file { create setattr getattr unlink write };
 
