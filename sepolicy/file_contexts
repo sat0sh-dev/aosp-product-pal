@@ -11,5 +11,6 @@
 # Phase 4.2: PAL2VCS Daemon (SOME/IP)
 /product/bin/pal2vcs_daemon    u:object_r:pal2vcs_daemon_exec:s0
 
-# Phase 4.2: vsomeip socket directory
-# POC: Using permissive mode, socket directory inherits default label
+# Phase 4.2.1: vsomeip socket directory
+# core_data_file_type attribute exempts from coredomain neverallow
+/dev/socket/vsomeip(/.*)?    u:object_r:vsomeip_data_file:s0

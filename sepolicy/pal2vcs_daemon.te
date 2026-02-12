@@ -7,16 +7,16 @@
 # - Use SOME/IP (vsomeip) for VCS communication
 # - Write to syslog for logging
 #
-# NOTE: POC uses permissive mode due to vsomeip socket creation neverallow.
-# Production deployment requires platform-level SELinux policy changes.
+# Phase 4.2.1: Enforcing mode enabled
+# vsomeip socket directory uses core_data_file_type to bypass neverallow
 
 # Type declarations
 type pal2vcs_daemon, domain, coredomain, mlstrustedsubject;
 type pal2vcs_daemon_exec, exec_type, file_type, system_file_type;
 
-# POC: Permissive mode for vsomeip socket operations
-# TODO: Production requires neverallow exception in system/sepolicy
-permissive pal2vcs_daemon;
+# Phase 4.2.1: vsomeip socket directory type
+# core_data_file_type is exempted from coredomain neverallow rules
+type vsomeip_data_file, file_type, data_file_type, core_data_file_type;
 
 # Domain transition from init
 init_daemon_domain(pal2vcs_daemon)
@@ -40,3 +40,11 @@ allow pal2vcs_daemon port:tcp_socket name_connect;
 # Allow syslog/logd access for logging
 allow pal2vcs_daemon logd:unix_dgram_socket sendto;
 allow pal2vcs_daemon logdr_socket:sock_file write;
+
+# Phase 4.2.1: vsomeip internal socket operations
+# vsomeip library creates UDS sockets at VSOMEIP_BASE_PATH for routing manager IPC
+allow pal2vcs_daemon vsomeip_data_file:dir { create_dir_perms rw_dir_perms };
+allow pal2vcs_daemon vsomeip_data_file:sock_file { create setattr getattr unlink write };
+
+# UDS server socket for receiving commands from Data Broker
+allow pal2vcs_daemon self:unix_stream_socket { bind listen accept };
