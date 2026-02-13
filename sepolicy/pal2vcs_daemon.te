@@ -53,7 +53,7 @@ allow pal2vcs_daemon logdr_socket:sock_file write;
 # vsomeip creates UDS sockets and lock files at /data/misc/vsomeip/ (VSOMEIP_BASE_PATH)
 allow pal2vcs_daemon vsomeip_data_file:dir { create_dir_perms rw_dir_perms };
 allow pal2vcs_daemon vsomeip_data_file:sock_file { create setattr getattr unlink write };
-allow pal2vcs_daemon vsomeip_data_file:file { create open read write getattr setattr unlink };
+allow pal2vcs_daemon vsomeip_data_file:file { create open read write getattr setattr unlink lock };
 
 # UDS server socket for receiving commands from Data Broker
 allow pal2vcs_daemon self:unix_stream_socket { bind listen accept };

@@ -1,8 +1,8 @@
 {
-    "unicast": "127.0.0.1",
+    "unicast": "192.168.0.240",
     "netmask": "255.255.255.0",
     "logging": {
-        "level": "info",
+        "level": "debug",
         "console": "true",
         "file": {
             "enable": "false"
@@ -17,13 +17,15 @@
             "id": "0x0200"
         }
     ],
-    "clients": [
+    "services": [
         {
             "service": "0x1234",
             "instance": "0x5678",
-            "unreliable": [30509]
+            "unicast": "192.168.0.211",
+            "unreliable": "30509"
         }
     ],
+    "routing": "pal2vcs_daemon",
     "service-discovery": {
         "enable": "false"
     }
