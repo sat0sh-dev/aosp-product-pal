@@ -52,7 +52,7 @@ allow pal2vcs_daemon self:netlink_route_socket { create bind read write nlmsg_re
 allow pal2vcs_daemon fwmarkd_socket:sock_file write;
 allow pal2vcs_daemon netd:unix_stream_socket connectto;
 allow netd pal2vcs_daemon:fd use;
-allow netd pal2vcs_daemon:udp_socket { read write };
+allow netd pal2vcs_daemon:udp_socket { read write getopt setopt };
 
 # Allow syslog/logd access for logging
 allow pal2vcs_daemon logd:unix_dgram_socket sendto;
