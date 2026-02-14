@@ -48,9 +48,9 @@ allow pal2vcs_daemon port:tcp_socket name_connect;
 # vsomeip uses netlink to monitor network interface changes
 allow pal2vcs_daemon self:netlink_route_socket { create bind read write nlmsg_read nlmsg_readpriv shutdown getattr setopt };
 
-# Android firewall marking (fwmarkd)
+# Android firewall marking (fwmarkd socket owned by netd)
 allow pal2vcs_daemon fwmarkd_socket:sock_file write;
-allow pal2vcs_daemon fwmarkd:unix_stream_socket connectto;
+allow pal2vcs_daemon netd:unix_stream_socket connectto;
 
 # Allow syslog/logd access for logging
 allow pal2vcs_daemon logd:unix_dgram_socket sendto;
